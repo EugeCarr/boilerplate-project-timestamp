@@ -29,6 +29,9 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date", function(req, res){
   const {date} = req.params;
+  var reg = new RegExp('/^\d+$/');
+  console.log(reg.test(date));
+
   console.log(date);
   const dateNumber = Number(moment(date).format('x'));
   console.log(dateNumber);
