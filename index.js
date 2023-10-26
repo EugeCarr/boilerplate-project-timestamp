@@ -29,16 +29,14 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date", function(req, res){
   const {date} = req.params;
-  var isTimestamp = /^\d+$/.test(date);
-  console.log(isTimestamp);
+  const dateFormatted = new Date(date)
 
   console.log(date);
-  const dateNumber = Number(moment(date).format('x'));
+  const dateNumber = Number(moment(dateFormatted).format('x'));
   console.log(dateNumber);
-  const dateString = `${moment(dateNumber).format('ddd, DD MMM yyyy hh:mm:ss')} GMT`;
+  const dateString = `${moment(dateFormatted).format('ddd, DD MMM yyyy hh:mm:ss')} GMT`;
   console.log(dateString)
 
-  console.log(dateNumber);
   res.json({"unix": dateNumber, "utc": dateString})
 })
 
