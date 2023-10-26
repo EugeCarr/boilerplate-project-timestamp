@@ -27,7 +27,7 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:date?", function(req, res){
+app.get("/api/:date", function(req, res){
   const {date} = req.params;
   const dateNumber = Number(Date.parse(date));
   const dateString = `${moment(date).format('ddd, DD MMM yyyy hh:mm:ss')} GMT`;
