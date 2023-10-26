@@ -30,7 +30,7 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:date", function(req, res){
   const {date} = req.params;
   console.log(date);
-  const dateNumber = Number(Date.parse(date));
+  const dateNumber = Number(moment(date).format('x'));
   console.log(dateNumber);
   const dateString = `${moment(dateNumber).format('ddd, DD MMM yyyy hh:mm:ss')} GMT`;
   console.log(dateString)
