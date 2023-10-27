@@ -38,21 +38,30 @@ app.get("/api/:date?", function(req, res){
   console.log(`input: ${date}`)
   
   if(/^\d+$/.test(date)){
+    console.log("number");
     dateFormatted = new Date(Number(date));
   } else{
+    console.log("date")
     dateFormatted = new Date(date);
   }
+  console.log(dateFormatted)
+  console.log(new Date("#####][][;"))
+  console.log(dateFormatted === new Date("#####][][;"))
+  if(isNaN(dateFormatted)){
 
-  var isTimestamp = /^\d+$/.test(date);
-  console.log(`is Timestamp: ${isTimestamp}`);
+    res.json({error: "Invalid Date"})
+  }else{
+    var isTimestamp = /^\d+$/.test(date);
+    console.log(`is Timestamp: ${isTimestamp}`);
 
-  console.log(`dateFormatted: ${dateFormatted}`);
-  const dateNumber = Number(moment(dateFormatted).format('x'));
-  console.log(`dateNumber: ${dateNumber}`);
-  const dateString = `${moment(dateFormatted).format('ddd, DD MMM yyyy hh:mm:ss')} GMT`;
-  console.log(`dateString: ${dateString}`)
+    console.log(`dateFormatted: ${dateFormatted}`);
+    const dateNumber = Number(moment(dateFormatted).format('x'));
+    console.log(`dateNumber: ${dateNumber}`);
+    const dateString = `${moment(dateFormatted).format('ddd, DD MMM yyyy HH:mm:ss')} GMT`;
+    console.log(`dateString: ${dateString}`)
 
-  res.json({"unix": dateNumber, "utc": dateString})
+    res.json({"unix": dateNumber, "utc": dateString})
+  }
 })
 
 
