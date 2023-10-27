@@ -27,15 +27,30 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:date", function(req, res){
-  const {date} = req.params;
-  const dateFormatted = new Date(date)
+app.get("/api/:date?", function(req, res){
+  var {date} = req.params;
+  var dateFormatted;
+  if(typeof(date) === typeof(undefined)){
+    console.log("empty date parameter");
+    date = new Date();
+  }
 
-  console.log(date);
+  console.log(`input: ${date}`)
+  
+  if(/^\d+$/.test(date)){
+    dateFormatted = new Date(Number(date));
+  } else{
+    dateFormatted = new Date(date);
+  }
+
+  var isTimestamp = /^\d+$/.test(date);
+  console.log(`is Timestamp: ${isTimestamp}`);
+
+  console.log(`dateFormatted: ${dateFormatted}`);
   const dateNumber = Number(moment(dateFormatted).format('x'));
-  console.log(dateNumber);
+  console.log(`dateNumber: ${dateNumber}`);
   const dateString = `${moment(dateFormatted).format('ddd, DD MMM yyyy hh:mm:ss')} GMT`;
-  console.log(dateString)
+  console.log(`dateString: ${dateString}`)
 
   res.json({"unix": dateNumber, "utc": dateString})
 })
@@ -43,5 +58,6 @@ app.get("/api/:date", function(req, res){
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
+// var listener = app.listen(5000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
